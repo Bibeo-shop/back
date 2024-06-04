@@ -19,8 +19,6 @@ import { ConfigModule } from '@nestjs/config';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    ProductsModule,
-    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
