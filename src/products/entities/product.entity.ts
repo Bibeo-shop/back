@@ -1,4 +1,5 @@
 import { Category } from 'src/categories/entities/category.entity';
+import { ProductOption } from 'src/product_options/entities/product_option.entity';
 import { ProductStatus } from 'src/product_status/entities/product_status.entity';
 import {
   Column,
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -49,4 +51,7 @@ export class Product {
   @ManyToOne(() => ProductStatus, (productStatus) => productStatus.product)
   @JoinColumn({ name: 'status_id' })
   status: ProductStatus;
+
+  @OneToMany(() => ProductOption, (productOption) => productOption.product)
+  options: ProductOption[];
 }
