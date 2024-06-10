@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
-import { UserCouponsStatus } from 'src/user-coupons-status/entities/user-coupons-status.entity';
+import { Coupon } from 'src/coupons/entities/coupon.entity';
 
 @Entity('user_coupons')
 export class UserCoupon {
@@ -24,10 +24,7 @@ export class UserCoupon {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(
-    () => UserCouponsStatus,
-    (userCouponsStatus) => userCouponsStatus.userCoupons,
-  )
-  @JoinColumn({ name: 'status_id' })
-  status: UserCouponsStatus;
+  @ManyToOne(() => Coupon, (coupon) => coupon.id)
+  @JoinColumn({ name: 'coupon_id' })
+  coupon: Coupon;
 }

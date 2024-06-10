@@ -1,11 +1,13 @@
 import { CouponIssuanceMode } from 'src/coupon-issuance-mode/entities/coupon-issuance-mode.entity';
 import { CouponStatus } from 'src/coupon-status/entities/coupon-status.entity';
+import { UserCoupon } from 'src/user-coupons/entities/user-coupon.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -44,4 +46,7 @@ export class Coupon {
   )
   @JoinColumn({ name: 'issuance_mode_id' })
   mode: CouponIssuanceMode;
+
+  @OneToMany(() => UserCoupon, (userCoupon) => userCoupon.coupon)
+  coupons: Coupon[];
 }
