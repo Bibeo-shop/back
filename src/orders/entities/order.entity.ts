@@ -1,4 +1,4 @@
-import { OrderCouponStatus } from 'src/order-coupon-status/entities/order-coupon-status.entity';
+import { OrderProduct } from 'src/order-products/entities/order-product.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -7,6 +7,7 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -29,4 +30,7 @@ export class Order {
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.order)
+  orders: OrderProduct[];
 }
