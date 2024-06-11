@@ -1,4 +1,5 @@
 import { CartStatus } from 'src/cart-status/entities/cart-status.entity';
+import { ProductOption } from 'src/product_options/entities/product_option.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -31,4 +32,8 @@ export class Cart {
   @ManyToOne(() => CartStatus, (cartStatus) => cartStatus.id)
   @JoinColumn({ name: 'cart_status_id' })
   cart_status: CartStatus;
+
+  @ManyToOne(() => ProductOption, (productOption) => productOption.id)
+  @JoinColumn({ name: 'product_option_id' })
+  option: ProductOption;
 }
