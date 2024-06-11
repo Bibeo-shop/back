@@ -1,5 +1,5 @@
 import { CartStatus } from 'src/cart-status/entities/cart-status.entity';
-import { ProductOption } from 'src/product_options/entities/product_option.entity';
+import { ProductOption } from 'src/product-options/entities/product_option.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,

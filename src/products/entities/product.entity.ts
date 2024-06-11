@@ -1,7 +1,7 @@
 import { Category } from 'src/categories/entities/category.entity';
 import { OrderProduct } from 'src/order-products/entities/order-product.entity';
-import { ProductOption } from 'src/product_options/entities/product_option.entity';
-import { ProductStatus } from 'src/product_status/entities/product_status.entity';
+import { ProductOption } from 'src/product-options/entities/product_option.entity';
+import { ProductStatus } from 'src/product-status/entities/product_status.entity';
 import {
   Column,
   CreateDateColumn,
