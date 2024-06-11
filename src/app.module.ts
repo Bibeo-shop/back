@@ -46,7 +46,6 @@ import { CartStatusModule } from './cart-status/cart-status.module';
     ReviewPointStatusModule,
     ExpirationDateStatusModule,
     CartsModule,
-    DeletedStatusModule,
     CartStatusModule,
   ],
   controllers: [AppController],
