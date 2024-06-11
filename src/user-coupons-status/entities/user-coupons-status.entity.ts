@@ -9,6 +9,6 @@ export class UserCouponsStatus {
   @Column({ length: 20 })
   name: string;
 
-  @OneToMany(() => UserCoupon, (userCoupon) => userCoupon.status)
+  @OneToMany(() => UserCoupon, (userCoupon) => userCoupon.coupon)
   userCoupons: UserCoupon[];
 }
