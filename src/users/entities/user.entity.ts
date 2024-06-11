@@ -13,6 +13,7 @@ import { UserCoupon } from 'src/user-coupons/entities/user-coupon.entity';
 import { UserPoint } from 'src/user-points/entities/user-point.entity';
 import { UserShippingAddress } from 'src/user-shipping-address/entities/user-shipping-address.entity';
 import { Order } from 'src/orders/entities/order.entity';
+import { Cart } from 'src/carts/entities/cart.entity';
 
 @Entity('users')
 export class User {
@@ -67,4 +68,7 @@ export class User {
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  carts: Cart[];
 }
