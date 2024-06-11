@@ -16,6 +16,7 @@ import { PurchasesPointStatusModule } from './purchases-point-status/purchases-p
 import { ReviewPointStatusModule } from './review-point-status/review-point-status.module';
 import { ExpirationDateStatusModule } from './expiration-date-status/expiration-date-status.module';
 import { CartsModule } from './carts/carts.module';
+import { CartStatusModule } from './cart-status/cart-status.module';
 
 @Module({
   imports: [
@@ -45,6 +46,8 @@ import { CartsModule } from './carts/carts.module';
     ReviewPointStatusModule,
     ExpirationDateStatusModule,
     CartsModule,
+    DeletedStatusModule,
+    CartStatusModule,
   ],
   controllers: [AppController],
   providers: [AppService],

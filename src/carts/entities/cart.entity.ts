@@ -1,3 +1,4 @@
+import { CartStatus } from 'src/cart-status/entities/cart-status.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -26,4 +27,8 @@ export class Cart {
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @ManyToOne(() => CartStatus, (cartStatus) => cartStatus.id)
+  @JoinColumn({ name: 'cart_status_id' })
+  cart_status: CartStatus;
 }
