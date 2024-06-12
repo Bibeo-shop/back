@@ -6,7 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
+  @Post('signup')
   async userCreate(@Body() createUserDto: CreateUserDto) {
     await this.usersService.signup(createUserDto);
     return { message: 'User creation successful' };
