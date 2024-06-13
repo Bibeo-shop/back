@@ -21,10 +21,9 @@ export class UsersService {
 
   async signup(createUserDto: CreateUserDto, userRole: UserRole) {
     const { email, password } = createUserDto;
-    let userPermission: number | null = null;
+    let userPermission;
 
     const isUserExist = await this.isEmailExist(email);
-    console.log('isUserExist', isUserExist);
     if (isUserExist) {
       throw new BadRequestException('사용할 수 없는 이메일입니다.');
     }
@@ -32,18 +31,15 @@ export class UsersService {
 
     if (userRole == 'NonMember') {
       const userPermissionInfo = await this.userPermissionService.findById(1);
-      userPermission = userPermissionInfo.id;
+      userPermission = userPermissionInfo;
     }
-    console.log(createUserDto);
 
-    const newUser = await this.userRepository.create({
-      ...createUserDto,
-      password: hashedPassword,
-      permissions_id: userPermission,
-    });
+    const user = new User();
+    Object.assign(user, createUserDto);
+    user.password = hashedPassword;
+    user.permission = userPermission;
 
-    console.log(userPermission);
-    return await this.userRepository.save(newUser);
+    return await this.userRepository.save(user);
   }
 
   async isEmailExist(email: string) {
