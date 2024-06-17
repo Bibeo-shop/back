@@ -9,17 +9,18 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserRole } from './user-role.enum';
-import { UserPermissionService } from '../user-permissions/user-permission.service';
+import { UserPermissionsService } from '../user-permissions/user-permissions.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly userPermissionService: UserPermissionService,
+    private readonly userPermissionsService: UserPermissionsService,
   ) {}
 
   async signup(createUserDto: CreateUserDto, userRole: UserRole) {
+    console.log(createUserDto, userRole);
     const { email, password } = createUserDto;
     let userPermission;
 
@@ -30,7 +31,7 @@ export class UsersService {
     const hashedPassword = await this.hashPassword(password);
 
     if (userRole == 'NonMember') {
-      const userPermissionInfo = await this.userPermissionService.findById(1);
+      const userPermissionInfo = await this.userPermissionsService.findById(1);
       userPermission = userPermissionInfo;
     }
 
@@ -38,8 +39,10 @@ export class UsersService {
     Object.assign(user, createUserDto);
     user.password = hashedPassword;
     user.permission = userPermission;
+    console.log(user);
 
-    return await this.userRepository.save(user);
+    const result = await this.userRepository.save(user);
+    return result;
   }
 
   async isEmailExist(email: string) {
