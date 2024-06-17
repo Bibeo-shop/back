@@ -8,28 +8,41 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { UserRole } from './user-role.enum';
+import { UserPermissionsService } from '../user-permissions/user-permissions.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly userPermissionsService: UserPermissionsService,
   ) {}
 
-  async signup(createUserDto: CreateUserDto) {
+  async signup(createUserDto: CreateUserDto, userRole: UserRole) {
+    console.log(createUserDto, userRole);
     const { email, password } = createUserDto;
+    let userPermission;
+
     const isUserExist = await this.isEmailExist(email);
-    console.log('isUserExist', isUserExist);
     if (isUserExist) {
       throw new BadRequestException('사용할 수 없는 이메일입니다.');
     }
     const hashedPassword = await this.hashPassword(password);
-    const newUserDto = {
-      ...createUserDto,
-      password: hashedPassword,
-    };
-    const newUser = await this.userRepository.create(newUserDto);
-    return await this.userRepository.save(newUser);
+
+    if (userRole == 'NonMember') {
+      const userPermissionInfo = await this.userPermissionsService.findById(1);
+      userPermission = userPermissionInfo;
+    }
+
+    const user = new User();
+    Object.assign(user, createUserDto);
+    user.password = hashedPassword;
+    user.permission = userPermission;
+    console.log(user);
+
+    const result = await this.userRepository.save(user);
+    return result;
   }
 
   async isEmailExist(email: string) {
