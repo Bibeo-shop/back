@@ -58,6 +58,4 @@ export class CreateUserDto {
     message: '올바른 형식(yyyy-mm-dd)으로 입력해주세요.',
   })
   birth_day: string;
-
-  permissions_id: number;
 }
