@@ -10,7 +10,10 @@ export class UserPermissionsService {
     private readonly userPermissionRepository: Repository<UserPermission>,
   ) {}
 
-  findById(id: number): Promise<UserPermission> {
-    return this.userPermissionRepository.findOne({ where: { id } });
+  async findById(id: number): Promise<UserPermission> {
+    const result = await this.userPermissionRepository.findOne({
+      where: { id },
+    });
+    return result;
   }
 }
