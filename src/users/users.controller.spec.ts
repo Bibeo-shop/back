@@ -65,7 +65,7 @@ describe('UsersController', () => {
     expect(userPermissionsService).toBeDefined();
   });
 
-  it('should be defined', async () => {
+  it('create user', async () => {
     // given
     const mockRequestData: mockCreateUserDto = {
       email: 'test@naver.com',
