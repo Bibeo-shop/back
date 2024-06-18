@@ -48,7 +48,7 @@ export class UsersService {
   async isEmailExist(email: string) {
     try {
       const userEmail = await this.userRepository.findOne({ where: { email } });
-      return !!userEmail;
+      return userEmail;
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('이메일 조회에 실패했습니다.');
