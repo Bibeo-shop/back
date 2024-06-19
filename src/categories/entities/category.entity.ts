@@ -1,5 +1,13 @@
+import { CategoryStatus } from 'src/category-status/entities/category-status.entity';
 import { Product } from 'src/products/entities/product.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('categories')
 export class Category {
@@ -11,4 +19,8 @@ export class Category {
 
   @OneToMany(() => Product, (product) => product.categories)
   product: Product[];
+
+  @ManyToOne(() => CategoryStatus, (categoryStatus) => categoryStatus.id)
+  @JoinColumn({ name: 'category_status_id' })
+  status: CategoryStatus;
 }
