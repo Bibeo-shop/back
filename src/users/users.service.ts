@@ -24,7 +24,7 @@ export class UsersService {
     const { email, password } = createUserDto;
     let userPermission;
 
-    const isUserExist = await this.isEmailExist(email);
+    const isUserExist = await this.findUserByEmail(email);
     if (isUserExist) {
       throw new BadRequestException('사용할 수 없는 이메일입니다.');
     }
@@ -45,13 +45,13 @@ export class UsersService {
     return result;
   }
 
-  async isEmailExist(email: string) {
+  async findUserByEmail(email: string) {
     try {
-      const userEmail = await this.userRepository.findOne({ where: { email } });
-      return !!userEmail;
+      const userData = await this.userRepository.findOne({ where: { email } });
+      return userData;
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('이메일 조회에 실패했습니다.');
+      throw new InternalServerErrorException('유저 조회에 실패했습니다.');
     }
   }
 
