@@ -26,12 +26,6 @@ export class UsersController {
     return { message: 'User creation successful' };
   }
 
-  @Post('login')
-  async userLogin(@Request() req) {
-    const request: Pick<CreateUserDto, 'email' | 'password'> = req.body;
-    return { token: await this.usersService.login(request) };
-  }
-
   @Get()
   findAll() {
     return this.usersService.findAll();

@@ -1,7 +1,5 @@
 import {
   BadRequestException,
-  HttpException,
-  HttpStatus,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
@@ -12,7 +10,6 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserRole } from './user-role.enum';
 import { UserPermissionsService } from '../user-permissions/user-permissions.service';
-import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
@@ -23,6 +20,7 @@ export class UsersService {
   ) {}
 
   async signup(createUserDto: CreateUserDto, userRole: UserRole) {
+    console.log(createUserDto, userRole);
     const { email, password } = createUserDto;
     let userPermission;
 
@@ -61,36 +59,6 @@ export class UsersService {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
     return hashedPassword;
-  }
-
-  async login(user: Pick<CreateUserDto, 'email' | 'password'>) {
-    try {
-      let token;
-      const isUserExist = await this.isEmailExist(user.email);
-      const matchPassword = await bcrypt.compare(
-        user.password,
-        isUserExist.password,
-      );
-      if (!isUserExist || !matchPassword) {
-        throw new HttpException(
-          '등록되지 않은 아이디이거나 아이디 또는 비밀번호를 잘못 입력했습니다.',
-          HttpStatus.UNAUTHORIZED,
-        );
-      }
-
-      if (isUserExist && matchPassword) {
-        const { email, password } = user;
-        token = await jwt.sign(email, process.env.JWT_SECRET);
-        return token;
-      }
-      return token;
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        '로그인에 실패했습니다.',
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
   }
 
   findAll() {
